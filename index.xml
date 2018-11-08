@@ -2,12 +2,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Akshay</title>
-    <link>https://demo.uicard.io/hugo-uilite-free/</link>
+    <link>https://akshay090.github.io/</link>
     <description>Recent content on Akshay</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     
-	<atom:link href="https://demo.uicard.io/hugo-uilite-free/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://akshay090.github.io/index.xml" rel="self" type="application/rss+xml" />
     
     
   </channel>
