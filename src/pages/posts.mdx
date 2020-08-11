@@ -1,27 +1,57 @@
 ---
-navigationLabel: Posts
+navigationLabel: posts
 ---
 
-# Posts
+import { Link as GatsbyLink } from "gatsby"
+import { PostCard } from "../components/PostCard"
 
-This is `src/pages/posts.mdx`
+# posts
 
-Here we use the `<SourceList />` to list files found in `posts`
-
-<SourceList>
-  {source => (
-    <ul>
-      {source.map((edge, index) => {
-        const {
-          frontmatter: { title },
-          fields: { slug }
-        } = edge.node;
-        return (
-          <li key={index}>
-            <a href={slug}>{title}</a>
-          </li>
-        );
-      })}
-    </ul>
-  )}
+<SourceList filter="posts">
+  {(posts) => {
+    return (
+      <Flex
+        sx={{
+          flexWrap: "wrap",
+          ml: (theme) => `-${theme.space[2]}px`,
+          mr: (theme) => `-${theme.space[2]}px`,
+        }}
+      >
+        {posts
+          .filter((edge) => !edge.node.frontmatter.isPrivate)
+          .reduce((posts, post) => {
+            return post.node.frontmatter.pinned
+              ? [post, ...posts]
+              : [...posts, post]
+          }, [])
+          .map((edge, index) => {
+            const {
+              frontmatter: {
+                title,
+                featuredImageUrl,
+                tags,
+                date,
+                dateModified,
+                pinned,
+              },
+              excerpt,
+              fields: { slug },
+            } = edge.node
+            return (
+              <PostCard
+                key={index}
+                title={title}
+                featuredImageUrl={featuredImageUrl}
+                tags={tags}
+                date={date}
+                dateModified={dateModified}
+                excerpt={excerpt}
+                slug={slug}
+                pinned={pinned}
+              />
+            )
+          })}
+      </Flex>
+    )
+  }}
 </SourceList>
