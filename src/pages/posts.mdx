@@ -2,8 +2,8 @@
 navigationLabel: posts
 ---
 
-import { Link as GatsbyLink } from "gatsby"
-import { PostCard } from "../components/PostCard"
+import { Link as GatsbyLink } from "gatsby";
+import { PostCard } from "../components/PostCard";
 
 # posts
 
@@ -22,7 +22,7 @@ import { PostCard } from "../components/PostCard"
           .reduce((posts, post) => {
             return post.node.frontmatter.pinned
               ? [post, ...posts]
-              : [...posts, post]
+              : [...posts, post];
           }, [])
           .map((edge, index) => {
             const {
@@ -35,8 +35,9 @@ import { PostCard } from "../components/PostCard"
                 pinned,
               },
               excerpt,
+              timeToRead,
               fields: { slug },
-            } = edge.node
+            } = edge.node;
             return (
               <PostCard
                 key={index}
@@ -48,10 +49,11 @@ import { PostCard } from "../components/PostCard"
                 excerpt={excerpt}
                 slug={slug}
                 pinned={pinned}
+                timeToRead={timeToRead}
               />
-            )
+            );
           })}
       </Flex>
-    )
+    );
   }}
 </SourceList>
