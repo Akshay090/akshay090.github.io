@@ -1,0 +1,113 @@
+---
+title: How to build formiQR - Event management with Google Forms and Cloud Function
+tags: ["email", "Firebase", "cloud functions"]
+date: 2019-04-23
+author: Akshay Ashok
+featuredImageUrl: https://res.cloudinary.com/akshay090/image/upload/v1597561185/Portfolio_Assets/formiqr_suvqqh.jpg
+---
+
+In this post I would go through what is formiQR and how to build formiQR.
+
+First of all what is formiQR and what problem it solves ?
+
+formiQR aims to leverages google form with help of firebase cloud function to be a complete event management platform.
+
+Initially I developed formiQR to help out a friend with an event, named MakerFest Vadodara. They needed a system, in which a user fills in the google form and then receive a personalized QR code, which they can scan at the event to conform their presence and also get other statistical data like how many people are present in the event, what age group they are, gender, etc.
+
+Now,after successfully completing this project, I thought of organizing all the code and making a proper repo, as this might be helpful to someone.
+
+So the proper git repo of the end product is at [Club-DevBytes/formiQR](https://github.com/Club-DevBytes/formiQR) and this is the blog post explaining it step by step.
+
+I plan to break down this into 4 parts:
+
+- Sending data filled in google form to firebase and using triggers in google sheets
+- [Sending personalized email from cloud function](/posts/formiqr-part2-email-cloud-function)
+- [A cloud function to implement a counter](/posts/formiqr-part3-counter-cloud-function)
+- [Android app to scan QR and update data in firebase and display it](/posts/formiqr-part4-appQR-to-firebase)
+
+# So lets begin with Part 1
+
+## Sending data filled in google form to firebase and using triggers in google sheets
+
+We need to send the data in the google sheet linked to our google form to Firebase, for this we would be using Google Apps Script, which is a scripting language for light-weight application development in the G Suite platform.
+
+To do that lets switch to the Tools > Script editor in the top bar
+
+Then you need to add the following code in the Code.gs
+
+```javascript
+//Code.gs
+function writeDataToFirebase() {
+    var firebaseUrl = "https://makerqr.firebaseio.com replace this with your own";
+    var secret = "the firebase database secret here";
+    var base = FirebaseApp.getDatabaseByUrl(firebaseUrl, secret);
+    var mySheet = SpreadsheetApp.openById("the id of your spreadsheet");
+    var dataSheet = mySheet.getSheets()[1];
+    var lastRow = mySheet.getLastRow();
+    var lastColumn = mySheet.getLastColumn();
+    var data = mySheet.getSheetValues(1, 1, lastRow, lastColumn);
+    var dataToImport = {};
+    for (var i = 1; i < data.length; i++) {
+        dataToImport[i] = {
+            name: data[i][1],
+            email: data[i][2],
+            gender: data[i][3],
+            age: data[i][4]
+        };
+    }
+    base.setData("maker", dataToImport);
+}
+function addNewData() {
+    writeDataToFirebase();
+}
+
+```
+
+The important details which need to be added in above code are:
+
+- FirebaseUrl and database secret, we will get it in next part
+- Your spreadsheet ID, which can be found in the url of the spreadsheet, as https://docs.google.com/spreadsheets/d/your-spreadsheetID/edit, you need to place this in the openById part of code.
+- Adding the Firebase App Library to send the data to firebase, for this go to Resources > Libraries > paste MYeP8ZEEt1ylVDxS7uyg9plDOcoke7-2l in add library and add it. Select version 30 and you are done.
+- The dataToImport json object, contains the are the coloums in spread sheet which you really care, with the column header, you can select a particular column form it no as in data[i][1] and so on.
+
+Now lets create a firebase project, so lets go to https://console.firebase.google.com and add project with an appropriate name.
+Now click Database in the side Nav bar, and scroll down to Realtime Database and click create database(for now select test mode).
+
+Now you can get your Firebase url form the page,
+ ![firebase url image, if broken then inform me](https://res.cloudinary.com/akshay090/image/upload/v1597561185/Portfolio_Assets/formiqr_suvqqh.jpg)
+
+Finally the last part, the database secret, for that
+
+- click on the settings/cog wheel icon next to your project name at the top of the new Firebase Console
+- Click Project settings
+- Click on the Service Accounts tab
+- Click on Database Secrets
+- Hover over the non-displayed secret and click Show
+
+Paste FirebaseUrl and database secret in the appropriate place in the code.gs and save it.
+
+Try to run the addNewData function by selecting in the `Select function` and click the Run button beside it.
+Have a look at firebase Realtime Database and all those data should be there.
+
+## Adding trigger to google sheets
+
+Now we need a method where this function should run automatically on form submit.
+That's where Triggers come handy, to set a trigger onSubmit follow the steps,
+In the Script Editor:
+
+- Choose Edit > Current project's triggers. You see a panel with the message No triggers set up. Click here to add one now.
+- Click the link.
+  Under Run, select the addNewData function which we want to be executed by the trigger. (That's onFormSubmit(), in this case.)
+  Under Events, select From Spreadsheet.
+- From the next drop-down list, select On form submit.
+  Click Save.
+- From this point on, the function will be triggered whenever a form is submitted to the spreadsheet.
+
+If you plan to share your script, each recipient will need to repeat these steps.
+
+Finally this is complete, now your data would be added to firebase on form submission.
+
+You can even add a SYNC button in your google sheets to run addNewData function [refer this link](https://stackoverflow.com/a/6966272). This might come handy when you manually enter data to sheets, or need to sync data to firebase, when you delete it there, during the testing phase.
+
+See you in [Part 2](/posts/formiqr-part2-email-cloud-function) where we will be discussing 
+Sending personalized email from cloud function.

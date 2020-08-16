@@ -1,0 +1,51 @@
+---
+title: Here's how I made a CLI tool to work with Google Colab notebooks.
+tags: ["python", "cli"]
+date: 2020-04-09
+author: Akshay Ashok
+featuredImageUrl: https://res.cloudinary.com/akshay090/image/upload/v1597570344/Portfolio_Assets/colab-cli.png
+---
+
+## What I built
+[colab-cli](https://github.com/Akshay090/colab-cli) : a cli tool to automate workflow of google colab, create, download or add notebooks to google colab and organize them in google drive from cli.
+
+## How I built it
+Hi, I recently started learning deep learning and google colab was my go-to place to try out all those notebooks's. I didn't like the entire UX of opening the projects from GitHub repos, saving to drive and then creating folders in the drive to organize all those notebooks's. 
+
+These were not the only problem if I had to commit my current version of the repo I had only one option to save a copy of GitHub, no option for GitLab or other services. 
+
+So the solution I came up to solve all those issues is [colab-cli](https://github.com/Akshay090/colab-cli), with this tool I could easily open any notebook in google colab from my terminal with command `colab-cli open-nb filename.ipynb `. 
+
+This tool work by uploading the notebook to google drive with the same file structure as in the local git repo.
+
+When I'm done with my work in google colab I use `colab-cli pull-nb filename.ipynb ` in terminal to get all those changes locally. Now I'm free to git commit it and push it to anywhere.
+
+If I make some changes to the notebooks locally and then again want to get back to colab with the modified file it's as easy as `colab-cli push-nb filename.ipynb `.
+
+And when I'm starting out with a project from scratch, I begin by initializing git repo in it with `git init` as it's necessary. Then I can make a new ipynb by using `colab-cli new-nb my_nb.ipynb`. This command creates a new notebook file both locally and in gdrive, also open's it in colab to start working.
+
+## Demo
+[![demo](https://asciinema.org/a/314749.svg)](https://asciinema.org/a/314749?autoplay=1)
+
+## Link to Code
+The complete project is opensource and you can find it at https://github.com/Akshay090/colab-cli
+Instructions to get started are in the readme.md
+
+## What's the stack? did I run into issues or discover something new along the way?
+
+It's written in python. I used [Typer](https://typer.tiangolo.com/) to make this CLI tool. Typer has really good tutorials and documentation to get started. The part of dealing with google drive API is handled by [PyDrive](https://pythonhosted.org/PyDrive/quickstart.html). The packaging part is managed easily due to [Poetry](https://python-poetry.org/).   
+
+The main time-consuming part was writing this [utilities](https://github.com/Akshay090/colab-cli/blob/master/colab_cli/utilities) to deal with folder and file creation and deletion. 
+
+I also use [gitpython](https://gitpython.readthedocs.io/en/stable/) to get the git root of the current directory, but later I removed it after moving files from it which I needed, as it had various other dependencies, which increased my package installation time.
+
+Some interesting things I learned from this project
+* folders are actually files with some metadata. 
+* To create a new colab notebook from API I had to know the mime type of google colab notebooks, which was apparently not documented anywhere like the [official google drive API page](https://developers.google.com/drive/api/v3/mime-types) to get this mime type I searched across all the API request that google drive made to find that the mime type of google colab notebooks is: `application/vnd.google.colaboratory`.
+
+This was a really interesting weekend project. I would really appreciate if you try it and give your feedback or help improve it further. 
+
+## Additional Resources/Info
+* Typer Tutorial : https://typer.tiangolo.com/tutorial/
+* Building package with Poetry : https://typer.tiangolo.com/tutorial/package/
+* Post image source : https://unsplash.com/photos/4SHxst61_Sg

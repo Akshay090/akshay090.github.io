@@ -1,0 +1,58 @@
+---
+title: Break the chain - SMS chatbot for awareness in times of COVID-19
+tags: ["twilio", "python", "flask", "web scraping"]
+date: 2020-04-06
+author: Akshay Ashok
+featuredImageUrl: https://res.cloudinary.com/akshay090/image/upload/v1597569978/Portfolio_Assets/break-chain.png
+---
+
+## What I built
+
+Hi, I have built an SMS chatbot using Twilio, which helps the user to track COVID-19 cases across different states of India, get COVID-19 news and answers some questions on COVID-19.
+
+The main idea of this project is to spread awareness regarding COVID-19 to a large number of people. So I decided to use Twilio SMS service for this project as an SMS facility is available to almost all mobile phones, this helps the information to reach people who don't use smartphones or computers.
+
+I named this project break-the-chain as public awareness is one of the major factors in the fight against COVID-19. People should stay alert regarding the disease spread and take precautions like social distancing to stop the spread of COVID-19 aka. break-the-chain of COVID-19.
+
+## Demo 
+![Demo Gif](https://raw.githubusercontent.com/Akshay090/break-the-chain/master/demo.gif)
+
+ 
+
+## Link to Code
+The complete project is opensource and you can find it at https://github.com/Akshay090/break-the-chain
+Instructions to run project is in readme.
+
+
+## How I built it (what's the stack? did I run into issues or discover something new along the way?)
+
+I initially went to [twilio.com/code-exchange](https://www.twilio.com/code-exchange) and searched for the chatbot, it showed me [this project](https://www.twilio.com/code-exchange/sms-support-chatbot-using-autopilot), I spent an hour with it trying to understand what it does, this project uses autopilot service of Twilio to apply NLP on SMS and calls actions bases on it. It felt too overwhelming for the basic idea I had. I learned a lot about express and pug from it.  
+
+So finally I decided to leave that project aside. I started working with flask as mentioned in [this blog post](https://www.twilio.com/blog/build-a-sms-chatbot-with-python-flask-and-twilio) and [also referred this post](https://www.twilio.com/blog/build-a-whatsapp-chatbot-with-python-flask-and-twilio) to send and receive messages through WhatsApp, as SMS rates to an international number(bought in Twilio) cost 5 ₹ each. I upgraded the base project as per my requirements.
+
+I looked across various public APIs for COVID-19 and realized I had to do web scraping to get details of COVID-19 cases of each state in India, as I didn't find any suitable working API for it.
+
+The scraping is done on https://www.mohfw.gov.in/ through a flask script and data is stored in SQLite DB. There is also a flask script to get news from newsapi.org and store it in DB. After these two process, the user can interact with the bot from the preferred channel.
+
+The latest addition I made to this project is a library called [chatterbot](https://chatterbot.readthedocs.io/en/stable/) it enables the bot to make small talks with a user with just 2 lines of code. This library was mentioned at the end of the second blog post mentioned above, else I would have missed it, 😅 thanks Twilio.
+
+The project is a flask app, it uses:
+* SQLite database 
+* sqlAlchemy for dealing with database 
+* marshmallow for (de)serialization 
+* Twilio python library 
+* beautifulsoup4 for web scraping
+* newsapi.org python client
+* chatterbot for fallback small talks
+
+## Categories of project
+This project falls into two categories
+* COVID-19 Communications: an app to help folks communicate during this challenging time, either to stay connected or to help resolve COVID-19 related challenges.
+* Interesting Integrations: an app that integrates Twilio with at least one other API.
+
+## Additional Resources/Info
+* Learn Flask : https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world
+* Automated responce to user Input : https://chatterbot.readthedocs.io/en/stable/
+* https://www.twilio.com/blog/build-a-sms-chatbot-with-python-flask-and-twilio
+* https://www.twilio.com/blog/build-a-whatsapp-chatbot-with-python-flask-and-twilio
+ 

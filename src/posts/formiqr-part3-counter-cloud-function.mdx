@@ -1,0 +1,55 @@
+---
+title: A cloud function to implement a counter
+tags: ["email", "Firebase", "cloud functions"]
+date: 2019-04-22
+author: Akshay Ashok
+---
+
+To add the counter we need to append the following code in the index.js, which we created in Part-2 post, please refer it before proceeding.
+
+Code to implement the counter is as follows :
+
+```js
+exports.genderCountFxn = functions.database
+  .ref("/atEvent/{date}/{id}")
+  .onCreate((snapshot, context) => {
+    // Grab the current value of what was written to the Realtime Database.
+    const Visitor = snapshot.val();
+    console.log("Inside Visitor Fxn");
+    console.log(Visitor);
+
+    console.log(Visitor.name);
+
+    //---------------------------------------------------
+    //Working gender counter
+    const genderCountersRef = admin.database().ref(`count/${Visitor.gender}`);
+
+    return genderCountersRef.transaction((counter_value) => {
+      return (counter_value || 0) + 1;
+    });
+  });
+//To deploy firebase deploy --only functions:genderCountFxn
+
+exports.overallCountFxn = functions.database
+  .ref("/atEvent/{date}/{id}")
+  .onCreate((snapshot, context) => {
+    const Visitor = snapshot.val();
+
+    const overallCountersRef = admin.database().ref(`count/overAllTotal`);
+
+    return overallCountersRef.transaction((counter_value) => {
+      return (counter_value || 0) + 1;
+    });
+  });
+//To deploy firebase deploy --only functions:overallCountFxn
+```
+
+We would be creating the atEvent node in the next blog, where it would be generated when we scan the QR with the android app.
+
+To understand the path and the code above, have a look at the Realtime database.
+
+![](https://res.cloudinary.com/akshay090/image/upload/v1597569044/Portfolio_Assets/firebase2_f36m2o.png)
+
+Understanding how to get this done took an effort, so if you don't get it they feel free to ask me in comments. This code is just of few lines, but it did it job perfectly to give me a bad time 😰
+
+No lets us move to the next and the last part of this series [here](/posts/formiqr-part4-appQR-to-firebase) to see how to implement the app to view firebase data and scan qr.

@@ -1,0 +1,64 @@
+---
+title: Gitify - Interact with Git from browser extension.
+tags: ["github", "extension", "extension", "react", "typescript", "golang"]
+date: 2020-07-06
+author: Akshay Ashok
+featuredImageUrl: https://res.cloudinary.com/akshay090/image/upload/v1597571224/Portfolio_Assets/gitify.png
+---
+
+**TLDR :** I build this project called gitify, by which you can interact with Git from browser extension. 
+
+Check it out and give it a 🌟 if you like it.
+[`Akshay090/gitify`](https://github.com/Akshay090/gitify)
+
+## 🎥 Demo
+
+[![Gitify Demo](https://raw.githubusercontent.com/Akshay090/gitify/master/.github/images/demo.jpg)](https://player.vimeo.com/video/435355152 "Gitify Demo")
+
+
+Few months back I had discussed this idea of a browser extension with my friends from which I could clone and open a GitHub repository in VsCode instantly, as I like to check out projects form GitHub and it would be cool to interact with Git from browser.
+
+Then after procrastination for months I decided to work on this, coincidentally there was also an [online hackathon](https://github.com/Akshay090/gitify) that weekend by MLH. Trust me if it wasn't for the hackathon I doubt if I would have ever started this project. That feeling to make a MVP in limited time is truly something. 
+
+I started out by listing the basic features I needed to implement : Git Clone, Open in VsCode. Hmm.. why not add Git Push and Pull, this covers most of the Git commands I use.
+
+A browser extension alone can't communicate with Git, I also had to implement a server, this would run on the user system.
+
+## Building Browser Extension
+
+The GitHub UI has changed recently. So I decided to not to go with the approach of injecting buttons into page and keep everything in browser extension Popup.
+
+I decided to go with this starter repo : [web-extension-starter](https://github.com/abhijithvijayan/web-extension-starter), this is a really good starter project for building cross browser extension. I starter working with the react-typescript setup in it.
+
+I was fairly new to both TypeScript and React Hooks, working with them was a really good learning experience. TypeScript can be annoying but trust me it's really worth it.
+
+The most helpful and annoying tool was eslint. If it wasn't for eslint my Hooks code would have looked completely different. In the begining I would frequently use
+ ```// eslint-disable-next-line react-hooks/exhaustive-deps ``` 
+
+I took some time to understand React Hooks, read this article by [Dan Abramov](https://overreacted.io/a-complete-guide-to-useeffect/), tried to solve the bugs where the Effect would fire multiple times and finally managed to work without using the exhaustive-deps. 
+
+React Hooks are really easy to understand but difficult to master. They feel like black magic sometimes. I had to use this [useEffectDebugger](https://github.com/Akshay090/gitify/blob/fd3285391da652b5ad1ebaa1d05fa0986cef29f0/source/utils/index.ts#L95) to figure out some bugs.
+
+## Building the Server
+
+Recently I started learning Golang, totally on a whim as I saw it on Coursera. I made some notes on it too, you can [find it here](https://github.com/Akshay090/golang-notes). 
+
+So as you have guessed, I decided to write the server in Golang, as Golang generates binary it would be easy to distribute and install. 
+
+I used this [simple-go-server](https://github.com/enricofoltran/simple-go-server) as a starter. Initially I used to perform the git operation using [go-git](https://github.com/go-git/go-git) which is A Git implementation in pure Go, but later on I switched to os/exec.
+
+To make it easy to use for others I had to convert this server code to something which can run in background so that it won't be too annoying. I came accross this project : [kardianos/service](https://github.com/kardianos/service). I tried out the example code and it worked perfectly in my system, but apparently I didn't know how to convert my server code to a system service, as there were no proper blog post on how to use it, with windows in particular.While researching I made [this gist](https://gist.github.com/Akshay090/d4f2e0f91a99b516d9d638a1e1a60a0d) of projects which use kardianos/service. 
+
+I decided to switch to other options, like system tray.
+To implement the System tray I choose [trayhost](https://github.com/cratonica/trayhost), as I found it comparatively faster than the alternative [systray](https://github.com/getlantern/systray). Then I added an icon to the generated exe by refering [this repo](https://gitlab.com/gozoo/rc-demo).
+
+I used [gopherize.me](https://gopherize.me/) to generate the logo/icon, you should definitely check it out.
+
+## Releasing with GitHub actions.
+
+I used [anton-yurchenko/git-release](https://github.com/anton-yurchenko/git-release) to Publish a GitHub Release, it publishes assets and works along with a Changelog.md file making the relases descriptive.
+
+The [gitifyServer](https://github.com/Akshay090/gitifyServer) runs the GitHub action in a windows runner and the one in [gitify](https://github.com/Akshay090/gitify) repo runs in ubuntu runner.
+
+This project was really fun to build, it currently works on windows only as I don't have either mac or linux to test on them. If you would like to add support it would be really appreciated.  
+

@@ -14,9 +14,18 @@ export default {
     background: "#1d2224",
     surface: "#2d3831",
   },
-  
+
   styles: {
     ...baseTheme.styles,
+    img: {
+      maxWidth: "100%",
+      maxHeight: "calc(50vh + 180px)",
+      borderRadius: "3px",
+    },
+    iframe: {
+      width: "100%",
+      height: "100%",
+    },
     p: {
       a: {
         ...baseTheme.styles.p.a,
@@ -77,4 +86,4 @@ export default {
       },
     },
   },
-}
+};
