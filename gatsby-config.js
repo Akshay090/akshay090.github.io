@@ -4,7 +4,7 @@ module.exports = {
     description: "I'm a Full Stack Developer / MERN Stack - GraphQL Developer based in India",
     keywords: ["tech", "blog", "React", "Gatsby"],
     siteUrl: "https://akshay-ashok.now.sh",
-    siteImage: "terminal-open-graph-image.jpg",
+    siteImage: "images/akshay-open-graph-image.jpg",
     profileImage: ``,
     lang: `en`,
     config: {
