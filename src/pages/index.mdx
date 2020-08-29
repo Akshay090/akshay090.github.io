@@ -2,18 +2,20 @@
 navigationLabel: home
 ---
 
-import { Link as GatsbyLink } from "gatsby"
-import { mix } from "@theme-ui/color"
-import { PostCard } from "../components/PostCard"
+import { Link as GatsbyLink } from "gatsby";
+import { mix } from "@theme-ui/color";
+import { PostCard } from "../components/PostCard";
+import { ProjectCard } from "../components/ProjectCard";
+import { format } from "date-fns";
 
 <Alert variant="success">I'm currently looking for new opportunities 😊</Alert>
 <Divider />
 
 # [akshay-ashok](#akshay-ashok)
 
-Full Stack Developer based in India 
+Full Stack Developer based in India
 
-Microsoft Learn Student Ambassador, React, NodeJS, Express, MongoDB, PostgreSQL, Python, Django, Apollo/GraphQL.  
+Microsoft Learn Student Ambassador, React, NodeJS, Express, MongoDB, PostgreSQL, Python, Django, Apollo/GraphQL.
 
 <Button
   as="a"
@@ -27,11 +29,7 @@ Microsoft Learn Student Ambassador, React, NodeJS, Express, MongoDB, PostgreSQL,
   View CV/Resume
 </Button>
 
-<Link
-  href=""
-  target="_blank"
-  title="View CV"
->
+<Link href="" target="_blank" title="View CV">
   .pdf version
 </Link>
 <Divider />
@@ -64,21 +62,13 @@ cool products. I mainly work with ReactJS for frontend and NodeJS or Python depe
 <Divider />
 
 <Text>Twitter</Text>
-<Link
-  href="https://twitter.com/aks2899"
-  target="_blank"
-  variant="styles.a"
->
+<Link href="https://twitter.com/aks2899" target="_blank" variant="styles.a">
   https://twitter.com/aks2899
 </Link>
 <Divider />
 
 <Text>GitHub</Text>
-<Link
-  href="https://github.com/Akshay090"
-  target="_blank"
-  variant="styles.a"
->
+<Link href="https://github.com/Akshay090" target="_blank" variant="styles.a">
   https://github.com/Akshay090
 </Link>
 <Divider />
@@ -103,7 +93,7 @@ cool products. I mainly work with ReactJS for frontend and NodeJS or Python depe
       {tags
         .sort((a, b) => b.percent - a.percent)
         .map((tag, index) => {
-          const { name, count, percent } = tag
+          const { name, count, percent } = tag;
           return (
             <Badge
               key={index}
@@ -121,7 +111,7 @@ cool products. I mainly work with ReactJS for frontend and NodeJS or Python depe
             >
               {name}
             </Badge>
-          )
+          );
         })}
     </Box>
   )}
@@ -132,6 +122,36 @@ cool products. I mainly work with ReactJS for frontend and NodeJS or Python depe
 
 </Box>
 </Flex>
+
+## projects
+
+<SourceList filter="projects">
+  {(projects) => (
+    <Flex
+      sx={{
+        flexWrap: "wrap",
+        ml: (theme) => `-${theme.space[2]}px`,
+        mr: (theme) => `-${theme.space[2]}px`,
+      }}
+    >
+      {projects.map((edge, index) => {
+        const {
+          frontmatter: { title, misc, date },
+          fields: { slug },
+        } = edge.node;
+        return (
+          <ProjectCard
+            index={index}
+            title={title}
+            misc={misc}
+            date={date}
+            slug={slug}
+          />
+        );
+      })}
+    </Flex>
+  )}
+</SourceList>
 
 ## latest posts
 
@@ -151,7 +171,7 @@ cool products. I mainly work with ReactJS for frontend and NodeJS or Python depe
         .reduce((posts, post) => {
           return post.node.frontmatter.pinned
             ? [post, ...posts]
-            : [...posts, post]
+            : [...posts, post];
         }, [])
         .splice(0, 4)
         .map((edge, index) => {
@@ -167,7 +187,7 @@ cool products. I mainly work with ReactJS for frontend and NodeJS or Python depe
             excerpt,
             timeToRead,
             fields: { slug },
-          } = edge.node
+          } = edge.node;
           return (
             <PostCard
               key={index}
@@ -181,7 +201,7 @@ cool products. I mainly work with ReactJS for frontend and NodeJS or Python depe
               pinned={pinned}
               timeToRead={timeToRead}
             />
-          )
+          );
         })}
     </Flex>
   )}
