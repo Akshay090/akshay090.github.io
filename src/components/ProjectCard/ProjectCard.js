@@ -2,8 +2,7 @@ import React from "react";
 import { Box, Link, Card, Heading, Text, Image } from "theme-ui";
 import { format } from "date-fns";
 
-export const ProjectCard = ({ title, misc, date, slug, index }) => {
-  console.log(misc, "misc");
+export const ProjectCard = ({ title, misc, cardImage, slug, index }) => {
   return (
     <Box
       key={index}
@@ -20,11 +19,11 @@ export const ProjectCard = ({ title, misc, date, slug, index }) => {
             mr: 2,
           }}
         >
-          <Box sx={{ minHeight: "1px" }}>{misc && <Image src={misc} />}</Box>
+          <Box sx={{ minHeight: "1px" }}>{cardImage && <Image src={cardImage} />}</Box>
           <Box sx={{ p: 3 }}>
-            <Text sx={{ fontSize: 0, color: "muted" }}>
+            {/* <Text sx={{ fontSize: 0, color: "muted" }}>
               {format(new Date(date), "d-MMM-u")}
-            </Text>
+            </Text> */}
             <Heading variant="styles.h4" sx={{ color: "text" }}>
               {title}
             </Heading>

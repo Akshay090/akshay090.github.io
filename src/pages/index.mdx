@@ -134,7 +134,7 @@ cool products. I mainly work with ReactJS for frontend and NodeJS or Python depe
         mr: (theme) => `-${theme.space[2]}px`,
       }}
     >
-      {projects.map((edge, index) => {
+      {projects.splice(0, 6).map((edge, index) => {
         const {
           frontmatter: { title, misc, date },
           fields: { slug },
@@ -144,6 +144,7 @@ cool products. I mainly work with ReactJS for frontend and NodeJS or Python depe
             index={index}
             title={title}
             misc={misc}
+            {/* cardImage={embeddedImageUrls[0]} */}
             date={date}
             slug={slug}
           />
@@ -152,6 +153,23 @@ cool products. I mainly work with ReactJS for frontend and NodeJS or Python depe
     </Flex>
   )}
 </SourceList>
+
+<Divider />
+<Flex
+  sx={{
+    justifyContent: "center",
+  }}
+>
+  <Box>
+    <Button as={GatsbyLink} variant="ghost" href="/projects">
+      All Projects{" "}
+      <Box as="span" role="img" aria-label="pencil">
+        🛠
+      </Box>
+    </Button>
+  </Box>
+</Flex>
+<Divider />
 
 ## latest posts
 
