@@ -1,6 +1,5 @@
 import React from "react";
 import { Box, Link, Card, Heading, Text, Image } from "theme-ui";
-import { format } from "date-fns";
 
 export const ProjectCard = ({ title, misc, cardImage, slug, index }) => {
   return (
