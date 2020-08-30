@@ -24,10 +24,13 @@ export const ProjectCard = ({ title, misc, cardImage, slug, index }) => {
             {/* <Text sx={{ fontSize: 0, color: "muted" }}>
               {format(new Date(date), "d-MMM-u")}
             </Text> */}
-            <Heading variant="styles.h4" sx={{ color: "text" }}>
+            <Heading variant="styles.h4" sx={{ color: "text", mb: 2 }}>
               {title}
             </Heading>
-            <Text sx={{ textDecoration: "underline" }}>View project</Text>
+            <Text>
+              {misc}
+            </Text>
+            {/* <Text sx={{ textDecoration: "underline" }}>View project</Text> */}
           </Box>
         </Card>
       </Link>

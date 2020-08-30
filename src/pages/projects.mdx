@@ -2,11 +2,38 @@
 navigationLabel: projects
 ---
 
-import { Link as GatsbyLink } from "gatsby";
 import { ProjectCard } from "../components/ProjectCard";
 
 # Projects
 ### Things that I have made
 
-<Divider />
 
+
+<SourceList filter="projects">
+  {(projects) => (
+    <Flex
+      sx={{
+        flexWrap: "wrap",
+        ml: (theme) => `-${theme.space[2]}px`,
+        mr: (theme) => `-${theme.space[2]}px`,
+      }}
+    >
+      {projects.map((edge, index) => {
+        const {
+          frontmatter: { title, misc, date, featuredImageUrl },
+          fields: { slug },
+        } = edge.node;
+        return (
+          <ProjectCard
+            index={index}
+            cardImage={featuredImageUrl}
+            title={title}
+            misc={misc}
+            date={date}
+            slug={slug}
+          />
+        );
+      })}
+    </Flex>
+  )}
+</SourceList>

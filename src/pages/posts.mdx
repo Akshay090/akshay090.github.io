@@ -42,7 +42,7 @@ import { PostCard } from "../components/PostCard";
               <PostCard
                 key={index}
                 title={title}
-                featuredImageUrl={featuredImageUrl}
+                cardImage={index === 0 ? featuredImageUrl : null}
                 tags={tags}
                 date={date}
                 dateModified={dateModified}

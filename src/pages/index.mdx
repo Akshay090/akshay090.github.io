@@ -136,15 +136,15 @@ cool products. I mainly work with ReactJS for frontend and NodeJS or Python depe
     >
       {projects.splice(0, 6).map((edge, index) => {
         const {
-          frontmatter: { title, misc, date },
+          frontmatter: { title, misc, date, featuredImageUrl },
           fields: { slug },
         } = edge.node;
         return (
           <ProjectCard
             index={index}
+            cardImage={featuredImageUrl}
             title={title}
             misc={misc}
-            {/* cardImage={embeddedImageUrls[0]} */}
             date={date}
             slug={slug}
           />
@@ -210,7 +210,7 @@ cool products. I mainly work with ReactJS for frontend and NodeJS or Python depe
             <PostCard
               key={index}
               title={title}
-              featuredImageUrl={featuredImageUrl}
+              cardImage={index === 0 ? featuredImageUrl : null}
               tags={tags}
               date={date}
               dateModified={dateModified}
