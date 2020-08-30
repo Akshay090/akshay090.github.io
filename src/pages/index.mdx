@@ -20,8 +20,7 @@ Microsoft Learn Student Ambassador, React, NodeJS, Express, MongoDB, PostgreSQL,
 <Button
   as="a"
   variant="success"
-  href=""
-  target="_blank"
+  href="/resume"
   sx={{
     mr: 2,
   }}
@@ -29,7 +28,7 @@ Microsoft Learn Student Ambassador, React, NodeJS, Express, MongoDB, PostgreSQL,
   View CV/Resume
 </Button>
 
-<Link href="" target="_blank" title="View CV">
+<Link href="/akshay-cv.pdf" target="_blank" title="View CV">
   .pdf version
 </Link>
 <Divider />
@@ -141,6 +140,7 @@ cool products. I mainly work with ReactJS for frontend and NodeJS or Python depe
         } = edge.node;
         return (
           <ProjectCard
+            key={index}
             index={index}
             cardImage={featuredImageUrl}
             title={title}
