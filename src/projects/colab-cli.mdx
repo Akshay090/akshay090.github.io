@@ -1,6 +1,6 @@
 ---
 title: colab-cli
-date: 2020-02-27
+date: 2020-03-29
 author: Akshay Ashok
 misc: Sync colab notebooks locally
 featuredImageUrl : https://res.cloudinary.com/akshay090/image/upload/v1598771674/Portfolio_Assets/Projects/Banner/Frame_13_kbw6fb.png 
@@ -8,4 +8,24 @@ featuredImageUrl : https://res.cloudinary.com/akshay090/image/upload/v1598771674
 
 ## Motivation 
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id enim et mauris elementum lobortis. Donec non tellus justo. Ut sit amet elit mauris. Praesent eleifend cursus luctus. Praesent posuere rhoncus maximus. Donec nec felis nec metus semper pharetra ut ut libero. Ut hendrerit dui ut tincidunt egestas. Donec interdum pharetra arcu, vel egestas turpis ornare a. Phasellus quis euismod diam, sed convallis dolor.
+While working with my udacity deep learning moocs I had to deal with jupyter notebooks a lot and I happen 
+to use Google Colab for the free GPU's. Now the thing is that if I had to commit the notebooks to GitHub 
+like we do with our code or do it was not possible from the colab gui.
+
+To solve the issue I made this cli tool to sync colab notebooks locally. 
+
+Before colab-cli it required lot of work to commit files to GitHub as mentioned [in this blog post.](https://medium.com/@navan0/how-to-push-files-into-github-from-google-colab-379fd0077aa8) 
+But now with just one command, you can get notebooks from colab to local pc, like 
+```colab-cli pull-nb mynb.ipynb ```
+
+Then you can commit it the usual way.
+
+There are various other options and commands, 
+
+check it out at GitHub : [colab-cli](https://github.com/Akshay090/colab-cli)
+
+detailed blog post : [heres-how-i-made-a-cli-tool-to-work-with-google-colab-notebooks](https://akshay-ashok.now.sh/posts/colab-cli/)
+
+colab-cli was mentioned in these blog posts : 
+- [google-colaboratory-tips](https://amitness.com/2020/06/google-colaboratory-tips/)
+- [toolbox](https://amitness.com/toolbox/)
