@@ -6,6 +6,18 @@ import { Resume } from "../components/Resume";
 
 # Resume
 
-<Flex sx={{ justifyContent: "center" }}>
-  <Resume file="/akshay-cv.pdf"/>
-</Flex>
+<Button
+  as="a"
+  variant="secondary"
+  href="/akshay-resume.pdf"
+  sx={{
+    mr: 2,
+  }}
+>
+  Download PDF
+</Button>
+
+<Divider />
+<Divider />
+
+<Resume file="/akshay-resume.pdf" />
