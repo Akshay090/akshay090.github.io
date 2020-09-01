@@ -38,7 +38,7 @@ export const Resume = ({ file }) => {
 };
 
 function useWindowWidth() {
-  const [width, setWidth] = useState(window.innerWidth);
+  const [width, setWidth] = useState();
 
   useEffect(() => {
     const handleResize = () => setWidth(window.innerWidth);
